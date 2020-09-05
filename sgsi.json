@@ -1,0 +1,12 @@
+{
+  "rom_url": "https://master.dl.sourceforge.net/project/xiaomi-eu-multilang-miui-roms/xiaomi.eu/MIUI-WEEKLY-RELEASES/20.9.3/xiaomi.eu_multi_HMK30_20.9.3_v12-10.zip",
+  "rom_name": "xiaomi.eu_multi_HMK30_20.9.3_v12-10.zip",
+  "pack_sgsi": "K30_20.9.3-eu_XiaoxinSGSIs_Pinkdoge.7z",
+  "make_miui": true,
+  "make_flyme": false,
+  "make_coloros": false,
+  "make_h2os": false,
+  "make_smartisanos": false,
+  "make_zui": false,
+  "make_super": true
+}

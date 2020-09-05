@@ -1,0 +1,121 @@
+name: build_XiaoxinSGSIs
+
+on:
+  watch:
+    types: [started]
+#  push:
+#    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+       
+       - name: Clean Up
+         run: |
+           docker rmi `docker images -q`
+           sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
+           sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+           sudo -E apt-get update
+           sudo -E apt-get -y autoremove --purge
+           sudo -E apt-get clean 
+       
+       - name: Get variables
+         run: |
+           echo "::set-output name=rom_url::$(jq -r '.rom_url' sgsi.json)"
+           echo "::set-output name=rom_name::$(jq -r '.rom_name' sgsi.json)"
+           echo "::set-output name=pack_sgsi::$(jq -r '.pack_sgsi' sgsi.json)"
+           echo "::set-output name=make_miui::$(jq -r '.make_miui' sgsi.json)"
+           echo "::set-output name=make_flyme::$(jq -r '.make_flyme' sgsi.json)"
+           echo "::set-output name=make_coloros::$(jq -r '.make_coloros' sgsi.json)"
+           echo "::set-output name=make_h2os::$(jq -r '.make_h2os' sgsi.json)"
+           echo "::set-output name=make_smartisanos::$(jq -r '.make_smartisanos' sgsi.json)"
+           echo "::set-output name=make_zui::$(jq -r '.make_zui' sgsi.json)"
+           echo "::set-output name=make_super::$(jq -r '.make_super' sgsi.json)"
+         id: var
+           
+       - name: Download XiaoxinSGSIs Tools
+         uses: robinraju/release-downloader@v1
+         with:
+           repository: "xiaoxindada/SGSI-build-tool"
+           latest: true
+           fileName: "SGSI-build-tool.tar"
+           
+       - name: Initialization environment
+         run: |
+           sudo tar -xf SGSI-build-tool.tar
+           cd SGSI-build-tool/10
+           sudo bash setup.sh
+           
+       - name: Download Rom
+         run: sudo wget -c ${{ steps.var.outputs.rom_url }} -O SGSI-build-tool/10/tmp/${{ steps.var.outputs.rom_name }}
+       
+       - name: Build Super SGSI
+         if: steps.var.outputs.make_super == 'true'
+         run: |
+           sed -i 's/SGSI.sh/dynamic_SGSI.sh/g' SGSI-build-tool/10/make.sh
+       
+       - name: Make MIUI SGSI
+         if: steps.var.outputs.make_miui == 'true'
+         run: |
+           sudo rm -rf SGSI-build-tool/10/fixbug/fixbug.sh
+           mv fix/MIUI.sh SGSI-build-tool/10/fixbug/fixbug.sh
+           
+       - name: Make Flyme SGSI
+         if: steps.var.outputs.make_flyme == 'true'
+         run: |
+           sudo rm -rf SGSI-build-tool/10/fixbug/fixbug.sh
+           mv fix/Flyme.sh SGSI-build-tool/10/fixbug/fixbug.sh
+           
+       - name: Make ColorOS SGSI
+         if: steps.var.outputs.make_coloros == 'true'
+         run: |
+           sudo rm -rf SGSI-build-tool/10/fixbug/fixbug.sh
+           mv fix/ColorOS.sh SGSI-build-tool/10/fixbug/fixbug.sh
+           
+       - name: Make H2OS SGSI
+         if: steps.var.outputs.make_h2os == 'true'
+         run: |
+           sudo rm -rf SGSI-build-tool/10/fixbug/fixbug.sh
+           mv fix/H2OS.sh SGSI-build-tool/10/fixbug/fixbug.sh
+           
+       - name: Make SmartisanOS SGSI
+         if: steps.var.outputs.make_smartisanos == 'true'
+         run: |
+           sudo rm -rf SGSI-build-tool/10/fixbug/fixbug.sh
+           mv fix/SmartisanOS.sh SGSI-build-tool/10/fixbug/fixbug.sh
+           
+       - name: Make ZUI SGSI
+         if: steps.var.outputs.make_zui == 'true'
+         run: |
+           sudo rm -rf SGSI-build-tool/10/fixbug/fixbug.sh
+           mv fix/ZUI.sh SGSI-build-tool/10/fixbug/fixbug.sh
+            
+       - name: Generate SGSI
+         run: |
+           rm -rf SGSI-build-tool/10/SGSI.sh SGSI-build-tool/10/makeimg.sh SGSI-build-tool/10/bin/mke2fs SGSI-build-tool/10/bin/e2fsdroid SGSI-build-tool/10/dynamic_SGSI.sh
+           mv make/makeimg.sh make/SGSI.sh make/dynamic_SGSI.sh SGSI-build-tool/10/
+           mv bin/mke2fs bin/e2fsdroid SGSI-build-tool/10/bin/
+           cd SGSI-build-tool/10
+           sudo bash make.sh
+
+       - name: Zip Patch  
+         run: |
+           zip -r Patch1.zip Patch/Patch1/*
+           zip -r Patch2.zip Patch/Patch2/*
+           zip -r Patch3.zip Patch/Patch3/*
+           sudo mv Patch1.zip Patch2.zip Patch3.zip SGSI-build-tool/10/SGSI/
+
+       - name: 7z SGSI
+         run: 7za a -t7z -r ${{ steps.var.outputs.pack_sgsi }} SGSI-build-tool/10/SGSI/*
+
+       - name: Upload SGSI to WeTransfer
+         run: |
+           curl -sL https://git.io/file-transfer | sh
+           ./transfer wet ${{ steps.var.outputs.pack_sgsi }}
