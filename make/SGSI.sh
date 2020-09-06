@@ -129,17 +129,6 @@ function normal (){
  sed -i '/ro.apex.updatable/d' ./out/system/system/product/build.prop
  echo "#关闭apex更新" >> ./out/system/system/build.prop
  echo "ro.apex.updatable=false" >> ./out/system/system/build.prop
- 
- mainkeys="$(grep 'qemu.hw.mainkeys' ./out/system/system/build.prop)"
- 
- if [ $mainkeys ];then
-  sed -i 's/qemu.hw.mainkeys\=1/qemu.hw.mainkeys\=0/g' ./out/system/system/build.prop
- else
-  echo "" >> ./out/system/system/build.prop
-  echo "#启用虚拟键" >> ./out/system/system/build.prop
-  echo "qemu.hw.mainkeys=0" >> ./out/system/system/build.prop
- fi
- 
  sed -i 's/ro.product.system./ro.product./g' ./out/system/system/build.prop
  #sed -i '/ro.build.ab_update/d' ./out/system/system/build.prop
  sed -i '/system_root_image/d' ./out/system/system/build.prop
@@ -150,6 +139,16 @@ function normal (){
  cat ./make/add_build/build2 >> ./out/system/system/build.prop
  cat ./make/add_build/build3 >> ./out/system/system/build.prop
  rm -rf ./make/add_build/*.bak
+
+ mainkeys="$(grep 'qemu.hw.mainkeys=' ./out/system/system/build.prop)"
+ 
+ if [ $mainkeys ];then
+  sed -i 's/qemu.hw.mainkeys\=1/qemu.hw.mainkeys\=0/g' ./out/system/system/build.prop
+ else
+  echo "" >> ./out/system/system/build.prop
+  echo "#启用虚拟键" >> ./out/system/system/build.prop
+  echo "qemu.hw.mainkeys=0" >> ./out/system/system/build.prop
+ fi
 
  #删除多余文件
  rm -rf ./out/system/verity_key
@@ -204,7 +203,7 @@ function normal (){
     cat $default | grep 'surface_flinger'
    }
    if surface_flinger ;then
-    echo "" > /dev/null 2>&1
+    rm -rf ./default.txt
    else
     echo "" >> $default
     cat ./default.txt >> $default
