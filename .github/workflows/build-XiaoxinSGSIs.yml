@@ -105,6 +105,11 @@ jobs:
            cd SGSI-build-tool/10
            sudo bash make.sh
 
+       - name: Prepare Files to Make Patch
+         run: |
+           zip -r Prepare_patch.zip SGSI-build-tool/10/out/vendor/app/* SGSI-build-tool/10/out/vendor/bin/* SGSI-build-tool/10/out/vendor/etc/* SGSI-build-tool/10/out/vendor/lib/* SGSI-build-tool/10/out/vendor/lib64/* SGSI-build-tool/10/out/vendor/overlay/*
+           sudo mv Prepare_patch.zip SGSI-build-tool/10/SGSI/
+           
        - name: Zip Patch  
          run: |
            zip -r Patch1.zip Patch/Patch1/*
@@ -118,4 +123,13 @@ jobs:
        - name: Upload SGSI to WeTransfer
          run: |
            curl -sL https://git.io/file-transfer | sh
-           ./transfer wet ${{ steps.var.outputs.pack_sgsi }}
+           ./transfer wet ${{ steps.var.outputs.pack_sgsi }} > tmp.txt
+           cat tmp.txt | grep Download | cut -d ' ' -f 3 > link.txt
+           
+       - name: Upload Link to GitHub
+         run: |
+           git config --global user.email "42758990+Pinkdoge@users.noreply.github.com"
+           git config --global user.name "Pinkdoge"
+           git add link.txt
+           git commit -sm "upload link"
+           git push
