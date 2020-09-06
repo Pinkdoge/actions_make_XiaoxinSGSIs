@@ -33,10 +33,12 @@
 Fork此仓库后，点击右上角Star就会开始
 
 ## 制作结果
-可以在[Actions](../../actions)里查找网盘链接以下载
+制作完成后，就会推送链接到[link.txt](link.txt)，请留意commit或action情况
 
 ## 关于Patch
 这里引用小新大大的一句话 
 >本工具仅仅制作system.img部分 Patch部分需要手动 因为有些处理自动化并不理想 多变 所以手动制造Patch1 2 3更好
+
+***Prepare_patch.zip***是我从Rom的vendor提取部分文件打包得来，用以筛选文件合成Patch1
 
 Patch样本我已内置在压缩包里，请解压后自行更改
