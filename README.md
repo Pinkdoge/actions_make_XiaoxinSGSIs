@@ -1,4 +1,4 @@
-<h1 align="center"> 利用Github Actions制作XiaoxinSGSIs</h1>
+﻿<h1 align="center"> 利用Github Actions制作XiaoxinSGSIs</h1>
 
 <p align="center">
 	A Github Action to make XiaoxinSGSIs
