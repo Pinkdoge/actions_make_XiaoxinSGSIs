@@ -1,12 +1,12 @@
 {
-  "rom_url": "https://oxygenos.oneplus.net/OnePlus7TOxygen_13.W.07_OTA_007_all_2007291753_b6c821aba28145e8.zip",
-  "rom_name": "OnePlus7TOxygen_13.W.07_OTA_007_all_2007291753_b6c821aba28145e8.zip",
-  "pack_sgsi": "OP7T_OOS_13.W.07_XiaoxinSGSIs_Pinkdoge.7z",
-  "make_miui": false,
+  "rom_url": "https://hugeota.d.miui.com/20.9.4/miui_MI8SE_20.9.4_8b18fec4c4_10.0.zip",
+  "rom_name": "MI8SE_MIUI.zip",
+  "pack_sgsi": "MI8SE_MIUI.7z",
+  "make_miui": true,
   "make_flyme": false,
   "make_coloros": false,
-  "make_h2os": true,
+  "make_h2os": false,
   "make_smartisanos": false,
   "make_zui": false,
-  "make_super": true
+  "make_super": false
 }
