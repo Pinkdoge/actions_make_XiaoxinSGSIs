@@ -1,4 +1,4 @@
-﻿<h1 align="center"> 利用Github Actions制作XiaoxinSGSIs</h1>
+<h1 align="center"> 利用Github Actions制作XiaoxinSGSIs</h1>
 
 <p align="center">
 	A Github Action to make XiaoxinSGSIs
@@ -20,13 +20,14 @@
 | ------------------ | ------- | ------------------------------------------------------------ |
 | `rom_url`     | String  | Rom地址                                        |
 | `rom_name`  | String  | Rom文件名                                        |
+| `pack_sgsi`  | String  | 打包压缩后的文件名                                        |
 | `make_miui` | Boolean  | 指示是否制作MIUI的sgsi                                            |
 | `make_flyme`    | Boolean  | 指示是否制作Flyme的sgsi                                        |
 | `make_coloros`   | Boolean | 指示是否制作ColorOS的sgsi                                     |
 | `make_h2os`           | Boolean  | 指示是否制作H2OS的sgsi                  |
 | `make_smartisanos`    | Boolean  | 指示是否制作SmartisanOS的sgsi                                           |
 | `make_zui`        | Boolean  | 指示是否制作zui的sgsi                 |
-| `make_super`      | Boolean  | 指示是否制作动态分区的sgsi<sub>（注: 暂不支持动态分区的`ColorOS`）</sub>        |
+| `make_super`      | Boolean  | 指示是否制作动态分区的sgsi<sub>（注: 不支持动态分区的`ColorOS`）</sub>        |
 
 ## 开始
 
@@ -34,6 +35,7 @@ Fork此仓库后，点击右上角Star就会开始
 
 ## 制作结果
 制作完成后，就会推送链接到[link.txt](link.txt)，请留意commit或action情况
+>本来想传到release里的，但是限制大小2G，故采用此方法
 
 ## 关于Patch
 这里引用小新大大的一句话 

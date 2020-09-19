@@ -1,11 +1,11 @@
 {
-  "rom_url": "https://oxygenos.oneplus.net/OnePlus7TOxygen_13.W.07_OTA_007_all_2007291753_b6c821aba28145e8.zip",
-  "rom_name": "OnePlus7TOxygen_13.W.07_OTA_007_all_2007291753_b6c821aba28145e8.zip",
-  "pack_sgsi": "OP7T_OOS_13.W.07_XiaoxinSGSIs_Pinkdoge.7z",
+  "rom_url": "https://coloroswebsitefs.coloros.com/coloroswebsite-coloros-com/grs_20200825094237/PDEM10_11_OTA_0460_all_MHvLRj9IGkbL.ozip",
+  "rom_name": "PDEM10_11_OTA_0460_all_MHvLRj9IGkbL.ozip",
+  "pack_sgsi": "PDEM10_11_OTA_0460_XiaoxinSGSIs_Pinkdoge.7z",
   "make_miui": false,
   "make_flyme": false,
-  "make_coloros": false,
-  "make_h2os": true,
+  "make_coloros": true,
+  "make_h2os": false,
   "make_smartisanos": false,
   "make_zui": false,
   "make_super": true

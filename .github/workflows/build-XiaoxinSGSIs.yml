@@ -51,7 +51,7 @@ jobs:
          run: |
            sudo tar -xf SGSI-build-tool.tar
            rm -rf SGSI-build-tool/10/setup.sh
-           mv make/setup.sh SGSI-build-tool/10/
+           mv bin/setup.sh SGSI-build-tool/10/
            cd SGSI-build-tool/10
            sudo bash setup.sh
            
@@ -78,7 +78,8 @@ jobs:
        - name: Make ColorOS SGSI
          if: steps.var.outputs.make_coloros == 'true'
          run: |
-           sudo rm -rf SGSI-build-tool/10/fixbug/fixbug.sh
+           sudo python3 SGSI-build-tool/10/oppo_ozip/ozipdecrypt.py SGSI-build-tool/10/tmp/${{ steps.var.outputs.rom_name }}
+           sudo rm -rf SGSI-build-tool/10/tmp/${{ steps.var.outputs.rom_name }} SGSI-build-tool/10/fixbug/fixbug.sh
            mv fix/ColorOS.sh SGSI-build-tool/10/fixbug/fixbug.sh
            
        - name: Make H2OS SGSI
@@ -101,8 +102,8 @@ jobs:
             
        - name: Generate SGSI
          run: |
-           rm -rf SGSI-build-tool/10/SGSI.sh SGSI-build-tool/10/makeimg.sh SGSI-build-tool/10/bin/mke2fs SGSI-build-tool/10/bin/e2fsdroid SGSI-build-tool/10/dynamic_SGSI.sh
-           mv make/makeimg.sh make/SGSI.sh make/dynamic_SGSI.sh SGSI-build-tool/10/
+           rm -rf SGSI-build-tool/10/SGSI.sh SGSI-build-tool/10/makeimg.sh SGSI-build-tool/10/bin/mke2fs SGSI-build-tool/10/bin/e2fsdroid SGSI-build-tool/10/dynamic_SGSI.sh SGSI-build-tool/10/oppo.sh 
+           mv make/makeimg.sh make/SGSI.sh make/dynamic_SGSI.sh make/oppo.sh SGSI-build-tool/10/
            mv bin/mke2fs bin/e2fsdroid SGSI-build-tool/10/bin/
            cd SGSI-build-tool/10
            sudo bash make.sh
