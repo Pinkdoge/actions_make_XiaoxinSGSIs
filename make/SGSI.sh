@@ -120,6 +120,39 @@ function normal (){
  sed -i 's/sys.usb.config          u:object_r:system_radio_prop:s0//g' ./out/system/system/etc/selinux/plat_property_contexts
  sed -i 's/ro.build.fingerprint    u:object_r:fingerprint_prop:s0//g' ./out/system/system/etc/selinux/plat_property_contexts
 
+ #qssi机型修复
+ qssi (){
+  cat ./out/system/system/build.prop | grep -o 'qssi' > /dev/null 2>&1
+ }
+ if qssi ;then
+  echo "检测到原包为qssi 启用机型参数修复" 
+  
+  brand=$(cat ./out/vendor/build.prop | grep 'ro.product.vendor.brand')
+  device=$(cat ./out/vendor/build.prop | grep 'ro.product.vendor.device')
+  manufacturer=$(cat ./out/vendor/build.prop | grep 'ro.product.vendor.manufacturer')
+  model=$(cat ./out/vendor/build.prop | grep 'ro.product.vendor.model')
+  mame=$(cat ./out/vendor/build.prop | grep 'ro.product.vendor.name')
+  
+  echo "当前原包机型参数为:"
+  echo "$brand"
+  echo "$device"
+  echo "$manufacturer"
+  echo "$model"
+  echo "$mame"
+  
+  echo "正在修复"
+  sed -i '/ro.product.system./d' ./out/system/system/build.prop
+  echo "" >> ./out/system/system/build.prop
+  echo "#设备参数" >> ./out/system/system/build.prop
+  echo "$brand" >> ./out/system/system/build.prop
+  echo "$device" >> ./out/system/system/build.prop
+  echo "$manufacturer" >> ./out/system/system/build.prop
+  echo "$model" >> ./out/system/system/build.prop
+  echo "$mame" >> ./out/system/system/build.prop
+  sed -i 's/ro.product.vendor./ro.product./g' ./out/system/system/build.prop
+  echo "修复完成"
+ fi
+
  #build处理
  sed -i '/ro.apex.updatable/d' ./out/system/system/build.prop
  sed -i '/ro.apex.updatable/d' ./out/system/system/product/build.prop
@@ -188,15 +221,15 @@ function normal (){
  
  if [ -e ./out/vendor ];then
   rm -rf ./default.txt
-  cat ./out/vendor/default.prop | grep 'surface_flinger' > ./default.txt 
+  cat ./out/vendor/default.prop | grep 'surface_flinger' > /dev/null 2>&1
  fi
 
- default="$(find ./ -type f -name 'prop.default')"
+ default="$(find ./out/system/ -type f -name 'prop.default')"
  if [ ! $default = "" ];then
   if [ -e ./default.txt ];then
    surface_flinger (){
-    default="$(find ./ -type f -name 'prop.default')"
-    cat $default | grep 'surface_flinger'
+    default="$(find ./out/system/ -type f -name 'prop.default')"
+    cat $default | grep 'surface_flinger' > /dev/null 2>&1
    }
    if surface_flinger ;then
     rm -rf ./default.txt
@@ -355,6 +388,39 @@ function mandatory_pt (){
  sed -i 's/sys.usb.config          u:object_r:system_radio_prop:s0//g' ./out/system/system/etc/selinux/plat_property_contexts
  sed -i 's/ro.build.fingerprint    u:object_r:fingerprint_prop:s0//g' ./out/system/system/etc/selinux/plat_property_contexts
 
+#qssi机型修复
+ qssi (){
+  cat ./out/system/system/build.prop | grep -o 'qssi' > /dev/null 2>&1
+ }
+ if qssi ;then
+  echo "检测到原包为qssi 启用机型参数修复" 
+  
+  brand=$(cat ./out/vendor/build.prop | grep 'ro.product.vendor.brand')
+  device=$(cat ./out/vendor/build.prop | grep 'ro.product.vendor.device')
+  manufacturer=$(cat ./out/vendor/build.prop | grep 'ro.product.vendor.manufacturer')
+  model=$(cat ./out/vendor/build.prop | grep 'ro.product.vendor.model')
+  mame=$(cat ./out/vendor/build.prop | grep 'ro.product.vendor.name')
+  
+  echo "当前原包机型参数为:"
+  echo "$brand"
+  echo "$device"
+  echo "$manufacturer"
+  echo "$model"
+  echo "$mame"
+  
+  echo "正在修复"
+  sed -i '/ro.product.system./d' ./out/system/system/build.prop
+  echo "" >> ./out/system/system/build.prop
+  echo "#设备参数" >> ./out/system/system/build.prop
+  echo "$brand" >> ./out/system/system/build.prop
+  echo "$device" >> ./out/system/system/build.prop
+  echo "$manufacturer" >> ./out/system/system/build.prop
+  echo "$model" >> ./out/system/system/build.prop
+  echo "$mame" >> ./out/system/system/build.prop
+  sed -i 's/ro.product.vendor./ro.product./g' ./out/system/system/build.prop
+  echo "修复完成"
+ fi
+
  #build处理
  sed -i '/ro.apex.updatable/d' ./out/system/system/build.prop
  sed -i '/ro.apex.updatable/d' ./out/system/system/product/build.prop
@@ -482,17 +548,12 @@ fi
 
 echo "正在清理工作目录"
 
-if [ -e "./tmp/payload.bin" ];then
- mv ./tmp/*.zip ./
- mv ./tmp/*.bin ./
- rm -rf ./tmp/*
- rm -rf ./compatibility.zip 
- mv ./*.zip ./tmp/
- mv ./*.bin ./tmp/
+if [ -e ./tmp/payload.bin ];then
  rm -rf ./tmp/*.bin
-else
- mv ./tmp/*.zip ./
- rm -rf ./tmp/*
- rm -rf ./compatibility.zip
- mv ./*.zip ./tmp/
 fi
+
+mv ./tmp/*.zip ./
+rm -rf ./tmp/*
+rm -rf ./compatibility.zip
+mv ./*.zip ./tmp/
+

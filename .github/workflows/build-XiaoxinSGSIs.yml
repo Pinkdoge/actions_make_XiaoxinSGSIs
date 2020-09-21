@@ -38,6 +38,9 @@ jobs:
            echo "::set-output name=make_smartisanos::$(jq -r '.make_smartisanos' sgsi.json)"
            echo "::set-output name=make_zui::$(jq -r '.make_zui' sgsi.json)"
            echo "::set-output name=make_super::$(jq -r '.make_super' sgsi.json)"
+           echo "::set-output name=upload_transfer::$(jq -r '.upload_transfer' sgsi.json)"
+           echo "::set-output name=upload_link::$(jq -r '.upload_link' sgsi.json)"
+           echo "::set-output name=upload_artifact::$(jq -r '.upload_artifact' sgsi.json)"
          id: var
            
        - name: Download XiaoxinSGSIs Tools
@@ -124,15 +127,24 @@ jobs:
          run: 7za a -t7z -r ${{ steps.var.outputs.pack_sgsi }} SGSI-build-tool/10/SGSI/*
 
        - name: Upload SGSI to WeTransfer
+         if: steps.var.outputs.upload_transfer == 'true'
          run: |
            curl -sL https://git.io/file-transfer | sh
            ./transfer wet ${{ steps.var.outputs.pack_sgsi }} > tmp.txt
-           cat tmp.txt | grep Download | cut -d ' ' -f 3 > link.txt
            
        - name: Upload Link to GitHub
+         if: steps.var.outputs.upload_link == 'true'
          run: |
+           cat tmp.txt | grep Download | cut -d ' ' -f 3 > link.txt
            git config --global user.email "42758990+Pinkdoge@users.noreply.github.com"
            git config --global user.name "Pinkdoge"
            git add link.txt
            git commit -sm "upload link"
            git push
+           
+       - name: Upload SGSI to Artifact
+         if: steps.var.outputs.upload_artifact == 'true'
+         uses: actions/upload-artifact@v2
+         with: 
+           name: XiaoxinSGSIs
+           path: ${{ steps.var.outputs.pack_sgsi }}

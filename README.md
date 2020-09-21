@@ -28,14 +28,16 @@
 | `make_smartisanos`    | Boolean  | 指示是否制作SmartisanOS的sgsi                                           |
 | `make_zui`        | Boolean  | 指示是否制作zui的sgsi                 |
 | `make_super`      | Boolean  | 指示是否制作动态分区的sgsi<sub>（注: 不支持动态分区的`ColorOS`）</sub>        |
+| `upload_transfer`      | Boolean  | 指示是否上传sgsi到wetransfer        |
+| `upload_link`      | Boolean  | 指示是否将sgsi的wetransfer链接推送到[link.txt](link.txt)<sub>（注: 必须把上一项设为`true`才能打开此`Boolean`）</sub>        |
+| `upload_artifact`      | Boolean  | 指示是否上传sgsi到artifact        |
 
 ## 开始
 
 Fork此仓库后，点击右上角Star就会开始
 
 ## 制作结果
-制作完成后，就会推送链接到[link.txt](link.txt)，请留意commit或action情况
->本来想传到release里的，但是限制大小2G，故采用此方法
+在此提供三个选择，详情请看表格
 
 ## 关于Patch
 这里引用小新大大的一句话 

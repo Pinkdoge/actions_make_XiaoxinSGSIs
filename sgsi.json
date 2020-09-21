@@ -1,12 +1,15 @@
 {
-  "rom_url": "https://coloroswebsitefs.coloros.com/coloroswebsite-coloros-com/grs_20200825094237/PDEM10_11_OTA_0460_all_MHvLRj9IGkbL.ozip",
-  "rom_name": "PDEM10_11_OTA_0460_all_MHvLRj9IGkbL.ozip",
-  "pack_sgsi": "PDEM10_11_OTA_0460_XiaoxinSGSIs_Pinkdoge.7z",
-  "make_miui": false,
+  "rom_url": "https://nchc.dl.sourceforge.net/project/xiaomi-eu-multilang-miui-roms/xiaomi.eu/MIUI-WEEKLY-RELEASES/20.9.17/xiaomi.eu_multi_HMNote7_20.9.17_v12-10.zip",
+  "rom_name": "xiaomi.eu_multi_HMNote7_20.9.17_v12-10.zip",
+  "pack_sgsi": "HMNote7_20.9.17_Q-eu_XiaoxinSGSIs_Pinkdoge.7z",
+  "make_miui": true,
   "make_flyme": false,
-  "make_coloros": true,
+  "make_coloros": false,
   "make_h2os": false,
   "make_smartisanos": false,
   "make_zui": false,
-  "make_super": true
+  "make_super": false,
+  "upload_transfer": true,
+  "upload_link": true,
+  "upload_artifact": true
 }
