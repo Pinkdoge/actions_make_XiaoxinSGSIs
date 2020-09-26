@@ -28,6 +28,62 @@ model="$(cat ./out/system/system/build.prop | grep 'model' | cat)"
 echo "当前原包机型为:"
 echo "$model"
 
+function apex (){
+ rm -rf ./make/apex
+ mkdir ./make/apex
+ 
+ sed -i '/\/system\/system\/apex/d' ./out/config/system_file_contexts
+ sed -i '/system\/system\/apex/d' ./out/config/system_fs_config
+ 
+ files=$(find ./out/system/system/apex/ -name '*')
+ 
+ for file in $files ;do
+  if [ -d "$file" ];then
+   echo "$file" | sed 's#./out/#/#g' | sed 's/$/& 0 0 0755/g' | sed 's/.//' >> ./make/apex/apex_fs
+   echo "$file" | sed 's#./out/#/#g' | sed 's/$/& u:object_r:system_file:s0/g' >> ./make/apex/apex_contexts
+  fi
+  
+  if [ -f "$file" ];then
+   echo "$file" | sed 's#./out/#/#g' | sed 's/$/& 0 0 0644/g' | sed 's/.//' >> ./make/apex/apex_fs
+   if [ $(echo "$file" | grep '/*.so') ];then
+    echo "$file" | grep '.so' | sed 's#./out/#/#g' | sed 's/$/& u:object_r:system_lib_file:s0/g' >> ./make/apex/apex_contexts
+   else
+    echo "$file" | sed 's#./out/#/#g' | sed 's/$/& u:object_r:system_file:s0/g' >> ./make/apex/apex_contexts
+   fi
+  fi 
+ done
+ 
+ #contexts
+ sed -i '1d' ./make/apex/apex_contexts
+ echo "/system/system/apex u:object_r:system_file:s0" >> ./make/apex/apex_contexts
+ sed -i '/dex2oat/d' ./make/apex/apex_contexts
+ sed -i '/dexoptanalyzer/d' ./make/apex/apex_contexts
+ sed -i '/linker/d' ./make/apex/apex_contexts
+ #sed -i '/linker64/d' ./make/apex/apex_contexts
+ sed -i '/profman/d' ./make/apex/apex_contexts
+ sed -i '/com.android.resolv.apex/d' ./make/apex/apex_contexts
+ echo "/system/system/apex/com.android.resolv.apex u:object_r:system_file:s0" >> ./make/apex/apex_contexts
+ cat ./make/add_fs/apex_contexts >> ./make/apex/apex_contexts
+ 
+ #fs
+ sed -i '1d' ./make/apex/apex_fs
+ echo "system/system/apex 0 0 0755" >> ./make/apex/apex_fs
+ cat ./make/apex/apex_fs | grep "bin" >> ./make/apex/apex_bin_fs
+ sed -i '/bin/d' ./make/apex/apex_fs
+ sed -i 's/ 0 0 0644/ 0 2000 0755/g' ./make/apex/apex_bin_fs
+ sed -i 's/ 0 0 0755/ 0 2000 0755/g' ./make/apex/apex_bin_fs
+ sed -i '/dalvikvm/d' ./make/apex/apex_bin_fs
+ sed -i '/linker\_asan/d' ./make/apex/apex_bin_fs
+ #sed -i '/linker\_asan64/d' ./make/apex/apex_bin_fs
+ cat ./make/add_fs/apex_symlink_fs >> ./make/apex/apex_bin_fs
+ cat ./make/apex/apex_bin_fs >> ./make/apex/apex_fs
+ 
+ #合并fs
+ cat ./make/apex/apex_fs >> ./out/config/system_fs_config
+ cat ./make/apex/apex_contexts >> ./out/config/system_file_contexts
+
+}
+
 function normal (){
 
  echo "当前为正常pt 启用正常处理方案"
@@ -41,6 +97,23 @@ function normal (){
  cd ../../
  echo "修改完成"
  
+ #apex处理
+ rm -rf ./make/apex
+ apex_check (){
+ cd ./out/system/system/apex
+ ls
+ cd ../../../../
+ }
+ apex_file (){
+  apex_check | grep '.apex' > /dev/null 2>&1
+ }
+ if apex_file ;then
+  echo "正在apex扁平化处理"
+  ./apex.sh
+  apex
+ fi
+ 
+ #oppo检测
  if [ -e ./out/vendor/euclid/ ];then
   echo "检测到OPPO_Color 启用专用处理......."
   ./oppo.sh
@@ -215,9 +288,10 @@ function normal (){
  
  #default处理
  sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=adb/g' ./out/system/system/etc/prop.default
- sed -i 's/ro.secure=1/ro.secure=0/g' ./out/system/system/etc/prop.default
+ #sed -i 's/ro.secure=1/ro.secure=0/g' ./out/system/system/etc/prop.default
  sed -i 's/ro.debuggable=0/ro.debuggable=1/g' ./out/system/system/etc/prop.default
- #sed -i 's/ro.adb.secure=1/ro.adb.secure=0/g' ./out/system/system/etc/prop.default
+ sed -i 's/ro.adb.secure=1/ro.adb.secure=0/g' ./out/system/system/etc/prop.default
+ echo "ro.force.debuggable=1" >> ./out/system/system/etc/prop.default
  
  if [ -e ./out/vendor ];then
   rm -rf ./default.txt
@@ -319,8 +393,25 @@ function mandatory_pt (){
  rm -rf ./out/system/vendor_service_contexts
  echo "修改完成"
   
+ #apex处理
+ rm -rf ./make/apex
+ apex_check (){
+ cd ./out/system/system/apex
+ ls
+ cd ../../../../
+ }
+ apex_file (){
+  apex_check | grep '.apex' > /dev/null 2>&1
+ }
+ if apex_file ;then
+  echo "正在apex扁平化处理"
+  ./apex.sh
+  apex
+ fi
+ 
  rm -rf ./out/system/system/etc/ld.config.txt
  
+ #oppo检测
  if [ -e ./out/vendor/euclid/ ];then
   echo "检测到OPPO_Color 启用专用处理......."
   ./oppo.sh
@@ -488,9 +579,10 @@ function mandatory_pt (){
  
  #default处理
  sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=adb/g' ./out/system/system/etc/prop.default
- sed -i 's/ro.secure=1/ro.secure=0/g' ./out/system/system/etc/prop.default
+ #sed -i 's/ro.secure=1/ro.secure=0/g' ./out/system/system/etc/prop.default
  sed -i 's/ro.debuggable=0/ro.debuggable=1/g' ./out/system/system/etc/prop.default
- #sed -i 's/ro.adb.secure=1/ro.adb.secure=0/g' ./out/system/system/etc/prop.default
+ sed -i 's/ro.adb.secure=1/ro.adb.secure=0/g' ./out/system/system/etc/prop.default
+ echo "ro.force.debuggable=1" >> ./out/system/system/etc/prop.default
  sed -i '/ro.control_privapp_permissions/d' ./out/system/system/etc/prop.default
 
  #phh化处理
