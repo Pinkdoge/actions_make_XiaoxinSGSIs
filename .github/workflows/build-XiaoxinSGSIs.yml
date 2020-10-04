@@ -39,7 +39,6 @@ jobs:
            echo "::set-output name=make_zui::$(jq -r '.make_zui' sgsi.json)"
            echo "::set-output name=make_super::$(jq -r '.make_super' sgsi.json)"
            echo "::set-output name=upload_transfer::$(jq -r '.upload_transfer' sgsi.json)"
-           echo "::set-output name=upload_link::$(jq -r '.upload_link' sgsi.json)"
            echo "::set-output name=upload_artifact::$(jq -r '.upload_artifact' sgsi.json)"
          id: var
            
@@ -53,8 +52,8 @@ jobs:
        - name: Initialization environment
          run: |
            sudo tar -xf SGSI-build-tool.tar
-           rm -rf SGSI-build-tool/10/setup.sh
-           mv bin/setup.sh SGSI-build-tool/10/
+           sudo rm -rf SGSI-build-tool/10/setup.sh
+           sudo mv bin/setup.sh SGSI-build-tool/10/
            cd SGSI-build-tool/10
            sudo bash setup.sh
            
@@ -130,18 +129,8 @@ jobs:
          if: steps.var.outputs.upload_transfer == 'true'
          run: |
            curl -sL https://git.io/file-transfer | sh
-           ./transfer wet ${{ steps.var.outputs.pack_sgsi }} > tmp.txt
-           
-       - name: Upload Link to GitHub
-         if: steps.var.outputs.upload_link == 'true'
-         run: |
-           cat tmp.txt | grep Download | cut -d ' ' -f 3 > link.txt
-           git config --global user.email "42758990+Pinkdoge@users.noreply.github.com"
-           git config --global user.name "Pinkdoge"
-           git add link.txt
-           git commit -sm "upload link"
-           git push
-           
+           ./transfer wet ${{ steps.var.outputs.pack_sgsi }}
+          
        - name: Upload SGSI to Artifact
          if: steps.var.outputs.upload_artifact == 'true'
          uses: actions/upload-artifact@v2

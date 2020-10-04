@@ -187,8 +187,10 @@ function normal (){
   echo "正在apex扁平化处理"
   ./apex.sh
   apex
+  find ./out/system/system/apex/ -type f -name "*.apex" -delete
  fi
- 
+ cp -frp ./make/apex_patch/* ./out/system/system/apex/
+
  #oppo检测
  if [ -e ./out/vendor/euclid/ ];then
   echo "检测到OPPO_Color 启用专用处理......."
@@ -555,10 +557,10 @@ function mandatory_pt (){
   echo "正在apex扁平化处理"
   ./apex.sh
   apex
+  find ./out/system/system/apex/ -type f -name "*.apex" -delete
  fi
- 
- rm -rf ./out/system/system/etc/ld.config.txt
- 
+ cp -frp ./make/apex_patch/* ./out/system/system/apex/
+
  #oppo检测
  if [ -e ./out/vendor/euclid/ ];then
   echo "检测到OPPO_Color 启用专用处理......."
@@ -694,6 +696,8 @@ function mandatory_pt (){
  #删除多余文件
  rm -rf ./out/system/verity_key
  rm -rf ./out/system/sbin/dashd
+rm -rf ./out/system/system/etc/firmware
+ rm -rf ./out/system/system/etc/ld.config.txt
  rm -rf ./out/system/system/recovery-from-boot.p
  rm -rf ./out/system/system/recovery-from-boot.bak
  rm -rf ./out/system/system/priv-app/com.qualcomm.location

@@ -29,8 +29,7 @@
 | `make_zui`        | Boolean  | 指示是否制作zui的sgsi                 |
 | `make_super`      | Boolean  | 指示是否制作动态分区的sgsi<sub>（注: 不支持动态分区的`ColorOS`）</sub>        |
 | `upload_transfer`      | Boolean  | 指示是否上传sgsi到wetransfer        |
-| `upload_link`      | Boolean  | 指示是否将sgsi的wetransfer链接推送到[link.txt](link.txt)<sub>（注: 必须把上一项设为`true`才能打开此`Boolean`）</sub>        |
-| `upload_artifact`      | Boolean  | 指示是否上传sgsi到artifact        |
+| `upload_artifact`      | Boolean  | 指示是否上传sgsi到artifact<sub>（注: Github貌似对免费用户有限制，上传累计到一定量时就不能再上传了，故不推荐此方案）</sub>         |
 
 ## 开始
 

@@ -10,6 +10,5 @@
   "make_zui": false,
   "make_super": false,
   "upload_transfer": true,
-  "upload_link": true,
   "upload_artifact": true
 }
