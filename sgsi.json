@@ -1,6 +1,6 @@
 {
-  "rom_url": "https://nchc.dl.sourceforge.net/project/xiaomi-eu-multilang-miui-roms/https://download.meizu.com/Firmware/Flyme/16s_Pro/8.20.10.13/cn_daily/20201013100318/5103cf90/update.zip",
-  "rom_name": "https://download.meizu.com/Firmware/Flyme/16s_Pro/8.20.10.13/cn_daily/20201013100318/5103cf90/update.zip",
+  "rom_url": "https://download.meizu.com/Firmware/Flyme/16s_Pro/8.20.10.13/cn_daily/20201013100318/5103cf90/update.zip",
+  "rom_name": "Flyme/16s_Pro/8.20.10.13",
   "pack_sgsi": "meizu Flyme8_Q-eu_XiaoxinSGSIs_Pinkdoge.7z",
   "make_miui": true,
   "make_flyme": false,
