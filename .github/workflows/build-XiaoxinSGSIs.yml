@@ -104,16 +104,16 @@ jobs:
             
        - name: Generate SGSI
          run: |
-           rm -rf SGSI-build-tool/10/SGSI.sh SGSI-build-tool/10/makeimg.sh SGSI-build-tool/10/bin/mke2fs SGSI-build-tool/10/bin/e2fsdroid SGSI-build-tool/10/dynamic_SGSI.sh SGSI-build-tool/10/oppo.sh 
-           mv make/makeimg.sh make/SGSI.sh make/dynamic_SGSI.sh make/oppo.sh SGSI-build-tool/10/
+           rm -rf SGSI-build-tool/10/SGSI.sh SGSI-build-tool/10/makeimg.sh SGSI-build-tool/10/bin/mke2fs SGSI-build-tool/10/bin/e2fsdroid SGSI-build-tool/10/dynamic_SGSI.sh SGSI-build-tool/10/oppo.sh SGSI-build-tool/10/make.sh
+           mv make/makeimg.sh make/SGSI.sh make/dynamic_SGSI.sh make/oppo.sh make/make.sh SGSI-build-tool/10/
            mv bin/mke2fs bin/e2fsdroid SGSI-build-tool/10/bin/
            cd SGSI-build-tool/10
            sudo bash make.sh
 
-       - name: Prepare Files to Make Patch
+       - name: Make Patch Module
          run: |
-           zip -r Prepare_patch.zip SGSI-build-tool/10/out/vendor/app/* SGSI-build-tool/10/out/vendor/bin/* SGSI-build-tool/10/out/vendor/etc/* SGSI-build-tool/10/out/vendor/lib/* SGSI-build-tool/10/out/vendor/lib64/* SGSI-build-tool/10/out/vendor/overlay/*
-           sudo mv Prepare_patch.zip SGSI-build-tool/10/SGSI/
+           zip -r Patchmod.zip SGSI-build-tool/10/out/vendor/app/* SGSI-build-tool/10/out/vendor/bin/* SGSI-build-tool/10/out/vendor/etc/* SGSI-build-tool/10/out/vendor/lib/* SGSI-build-tool/10/out/vendor/lib64/* SGSI-build-tool/10/out/vendor/overlay/*
+           sudo mv Patchmod.zip SGSI-build-tool/10/SGSI/
            
        - name: Zip Patch  
          run: |

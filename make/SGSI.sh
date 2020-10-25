@@ -137,11 +137,6 @@ function normal (){
  echo "" >> ./make/add_build/build2
  echo "#oem厂商自定义属性" >> ./make/add_build/build2
 
- true > ./make/add_build/build3
- echo "" >> ./make/add_build/build3
- echo "#oem厂商odm自定义属性" >> ./make/add_build/build3
- echo "重置完成"
-
  echo "" > /dev/null 2>&1
  
  #系统种类检测
@@ -241,7 +236,6 @@ function normal (){
  sed -i 's/ro.sf.lcd/#&/' ./out/system/system/product/build.prop
  cat ./make/add_build/build1 >> ./out/system/system/build.prop
  cat ./make/add_build/build2 >> ./out/system/system/build.prop
- cat ./make/add_build/build3 >> ./out/system/system/build.prop
  rm -rf ./make/add_build/*.bak
 
  mainkeys="$(grep 'qemu.hw.mainkeys=' ./out/system/system/build.prop)"
@@ -331,6 +325,9 @@ function normal (){
  ./add_phh_lib64_fs.sh
  cd ../../../
 
+ #为phh化注册必要的selinux上下文
+ cat ./make/add_phh/plat_file_contexts >> ./out/system/system/etc/selinux/plat_file_contexts
+ 
  #fs数据整合
  cat ./make/add_fs/contexts >> ./out/config/system_file_contexts
  cat ./make/add_fs/fs >> ./out/config/system_fs_config
@@ -434,11 +431,6 @@ function mandatory_pt (){
  true > ./make/add_build/build2
  echo "" >> ./make/add_build/build2
  echo "#oem厂商自定义属性" >> ./make/add_build/build2
-
- true > ./make/add_build/build3
- echo "" >> ./make/add_build/build3
- echo "#oem厂商odm自定义属性" >> ./make/add_build/build3
- echo "重置完成"
  
  echo "" > /dev/null 2>&1
  
@@ -526,13 +518,10 @@ function mandatory_pt (){
  sed -i '/ro.control_privapp_permissions/d' ./out/system/system/build.prop 
  sed -i 's/ro.sf.lcd/#&/' ./out/system/system/build.prop
  sed -i 's/ro.sf.lcd/#&/' ./out/system/system/product/build.prop
- sed -i '/debug.sf.early_app_phase_offset_ns/d' ./out/system/system/build.prop
- sed -i '/debug.sf.early_gl_app_phase_offset_ns/d' ./out/system/system/build.prop
- sed -i '/debug.sf.early_gl_phase_offset_ns/d' ./out/system/system/build.prop
- sed -i '/debug.sf.early_phase_offset_ns/d' ./out/system/system/build.prop
+ sed -i '/debug.sf/d' ./out/system/system/build.prop
+ sed -i '/hbm/d' ./out/system/system/build.prop
  cat ./make/add_build/build1 >> ./out/system/system/build.prop
  #cat ./make/add_build/build2 >> ./out/system/system/build.prop
- cat ./make/add_build/build3 >> ./out/system/system/build.prop
  rm -rf ./make/add_build/*.bak
 
  mainkeys="$(grep 'qemu.hw.mainkeys=' ./out/system/system/build.prop)"
@@ -602,6 +591,9 @@ function mandatory_pt (){
  cd ./make/cp_phh/lib64
  ./add_phh_lib64_fs.sh
  cd ../../../
+
+ #为phh化注册必要的selinux上下文
+ cat ./make/add_phh/plat_file_contexts >> ./out/system/system/etc/selinux/plat_file_contexts
 
  #fs数据整合
  cat ./make/add_fs/contexts >> ./out/config/system_file_contexts
