@@ -38,6 +38,8 @@ jobs:
            echo "::set-output name=make_smartisanos::$(jq -r '.make_smartisanos' sgsi.json)"
            echo "::set-output name=make_zui::$(jq -r '.make_zui' sgsi.json)"
            echo "::set-output name=make_super::$(jq -r '.make_super' sgsi.json)"
+           echo "::set-output name=upload_transfer::$(jq -r '.upload_transfer' sgsi.json)"
+           echo "::set-output name=upload_artifact::$(jq -r '.upload_artifact' sgsi.json)"
          id: var
            
        - name: Download XiaoxinSGSIs Tools
@@ -50,6 +52,8 @@ jobs:
        - name: Initialization environment
          run: |
            sudo tar -xf SGSI-build-tool.tar
+           sudo rm -rf SGSI-build-tool/10/setup.sh
+           sudo mv bin/setup.sh SGSI-build-tool/10/
            cd SGSI-build-tool/10
            sudo bash setup.sh
            
@@ -76,7 +80,8 @@ jobs:
        - name: Make ColorOS SGSI
          if: steps.var.outputs.make_coloros == 'true'
          run: |
-           sudo rm -rf SGSI-build-tool/10/fixbug/fixbug.sh
+           sudo python3 SGSI-build-tool/10/oppo_ozip/ozipdecrypt.py SGSI-build-tool/10/tmp/${{ steps.var.outputs.rom_name }}
+           sudo rm -rf SGSI-build-tool/10/tmp/${{ steps.var.outputs.rom_name }} SGSI-build-tool/10/fixbug/fixbug.sh
            mv fix/ColorOS.sh SGSI-build-tool/10/fixbug/fixbug.sh
            
        - name: Make H2OS SGSI
@@ -99,12 +104,17 @@ jobs:
             
        - name: Generate SGSI
          run: |
-           rm -rf SGSI-build-tool/10/SGSI.sh SGSI-build-tool/10/makeimg.sh SGSI-build-tool/10/bin/mke2fs SGSI-build-tool/10/bin/e2fsdroid SGSI-build-tool/10/dynamic_SGSI.sh
-           mv make/makeimg.sh make/SGSI.sh make/dynamic_SGSI.sh SGSI-build-tool/10/
+           rm -rf SGSI-build-tool/10/SGSI.sh SGSI-build-tool/10/makeimg.sh SGSI-build-tool/10/bin/mke2fs SGSI-build-tool/10/bin/e2fsdroid SGSI-build-tool/10/dynamic_SGSI.sh SGSI-build-tool/10/oppo.sh SGSI-build-tool/10/make.sh
+           mv make/makeimg.sh make/SGSI.sh make/dynamic_SGSI.sh make/oppo.sh make/make.sh SGSI-build-tool/10/
            mv bin/mke2fs bin/e2fsdroid SGSI-build-tool/10/bin/
            cd SGSI-build-tool/10
            sudo bash make.sh
 
+       - name: Make Patch Module
+         run: |
+           zip -r Patchmod.zip SGSI-build-tool/10/out/vendor/app/* SGSI-build-tool/10/out/vendor/bin/* SGSI-build-tool/10/out/vendor/etc/* SGSI-build-tool/10/out/vendor/lib/* SGSI-build-tool/10/out/vendor/lib64/* SGSI-build-tool/10/out/vendor/overlay/*
+           sudo mv Patchmod.zip SGSI-build-tool/10/SGSI/
+           
        - name: Zip Patch  
          run: |
            zip -r Patch1.zip Patch/Patch1/*
@@ -116,6 +126,14 @@ jobs:
          run: 7za a -t7z -r ${{ steps.var.outputs.pack_sgsi }} SGSI-build-tool/10/SGSI/*
 
        - name: Upload SGSI to WeTransfer
+         if: steps.var.outputs.upload_transfer == 'true'
          run: |
            curl -sL https://git.io/file-transfer | sh
            ./transfer wet ${{ steps.var.outputs.pack_sgsi }}
+          
+       - name: Upload SGSI to Artifact
+         if: steps.var.outputs.upload_artifact == 'true'
+         uses: actions/upload-artifact@v2
+         with: 
+           name: XiaoxinSGSIs
+           path: ${{ steps.var.outputs.pack_sgsi }}
