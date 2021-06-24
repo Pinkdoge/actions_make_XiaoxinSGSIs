@@ -120,7 +120,7 @@ jobs:
          run: |
            mkdir -p upload
            zip -r ${{ steps.var.outputs.pack_sgsi }} SGSI-build-tool/10/SGSI/*
-           if [[ $(du -sh ${{ steps.var.outputs.pack_sgsi }} | awk '{print $1}') -gt 2097152000 ]];then
+           if [[ $(du -sb ${{ steps.var.outputs.pack_sgsi }} | awk '{print $1}') -gt 2097152000 ]];then
                  echo -e "split packaging..."
                  tar -cpzf - ${{ steps.var.outputs.pack_sgsi }} | split -d -b 1024m - upload/${{ steps.var.outputs.pack_sgsi }}
              else
