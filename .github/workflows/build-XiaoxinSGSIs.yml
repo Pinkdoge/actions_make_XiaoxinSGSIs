@@ -10,7 +10,7 @@ on:
     
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
@@ -25,6 +25,7 @@ jobs:
            sudo -E apt-get update
            sudo -E apt-get -y autoremove --purge
            sudo -E apt-get clean 
+           df -h
        
        - name: Get variables
          run: |
@@ -38,15 +39,13 @@ jobs:
            echo "::set-output name=make_smartisanos::$(jq -r '.make_smartisanos' sgsi.json)"
            echo "::set-output name=make_zui::$(jq -r '.make_zui' sgsi.json)"
            echo "::set-output name=make_super::$(jq -r '.make_super' sgsi.json)"
-           echo "::set-output name=upload_transfer::$(jq -r '.upload_transfer' sgsi.json)"
-           echo "::set-output name=upload_artifact::$(jq -r '.upload_artifact' sgsi.json)"
          id: var
            
        - name: Download XiaoxinSGSIs Tools
          uses: robinraju/release-downloader@v1
          with:
            repository: "xiaoxindada/SGSI-build-tool"
-           latest: true
+           tag: "v1.9"
            fileName: "SGSI-build-tool.tar"
            
        - name: Initialization environment
@@ -122,18 +121,22 @@ jobs:
            zip -r Patch3.zip Patch/Patch3/*
            sudo mv Patch1.zip Patch2.zip Patch3.zip SGSI-build-tool/10/SGSI/
 
-       - name: 7z SGSI
-         run: 7za a -t7z -r ${{ steps.var.outputs.pack_sgsi }} SGSI-build-tool/10/SGSI/*
-
-       - name: Upload SGSI to WeTransfer
-         if: steps.var.outputs.upload_transfer == 'true'
+       - name: zip SGSI
          run: |
-           curl -sL https://git.io/file-transfer | sh
-           ./transfer wet ${{ steps.var.outputs.pack_sgsi }}
-          
-       - name: Upload SGSI to Artifact
-         if: steps.var.outputs.upload_artifact == 'true'
-         uses: actions/upload-artifact@v2
-         with: 
-           name: XiaoxinSGSIs
-           path: ${{ steps.var.outputs.pack_sgsi }}
+           mkdir -p upload
+           zip -r ${{ steps.var.outputs.pack_sgsi }} SGSI-build-tool/10/SGSI/*
+           if [[ $(du -sh "${{ steps.var.outputs.pack_sgsi }}" | awk '{print $1}') -gt 2097152000 ]];then
+                 echo -e "split packaging..."
+                 tar -cpzf - "${{ steps.var.outputs.pack_sgsi }}" | split -d -b 1024m - "upload/${{ steps.var.outputs.pack_sgsi }}"
+             else
+                 mv ${{ steps.var.outputs.pack_sgsi }} upload/
+             fi
+             ls "upload"
+             
+       - name: Upload SGSI to action-gh-release...
+         uses: ncipollo/release-action@v1.8.6
+         with:
+           artifacts: upload/*
+           name: xiaoxinSGSI-ab-Android10-unpack
+           tag: xiaoxinSGSI-ab-Android10-${{ github.run_number }}
+           token: ${{ secrets.GITHUB_TOKEN }}
