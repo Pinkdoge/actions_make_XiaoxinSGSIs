@@ -1,9 +1,9 @@
 {
-  "rom_url": "https://udomain.dl.sourceforge.net/project/xiaomi-eu-multilang-miui-roms/xiaomi.eu/MIUI-WEEKLY-RELEASES/20.10.22/xiaomi.eu_multi_HMNote7_20.10.22_v12-10.zip",
-  "rom_name": "xiaomi.eu_multi_HMNote7_20.10.22_v12-10.zip",
-  "pack_sgsi": "HMNote7_20.10.22_Q-eu_XiaoxinSGSIs_Pinkdoge.7z",
+  "rom_url": "https://firmware.meizu.com/Firmware/Flyme/meizu17_Pro/9.3.0.0/cn/20220628162947/5c62e2d5/update.zip",
+  "rom_name": "update.zip",
+  "pack_sgsi": "XiaoxinSGSIs_Pinkdoge.7z",
   "make_miui": true,
-  "make_flyme": false,
+  "make_flyme": true,
   "make_coloros": false,
   "make_h2os": false,
   "make_smartisanos": false,
