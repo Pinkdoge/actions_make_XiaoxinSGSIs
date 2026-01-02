@@ -34,8 +34,6 @@
 | `make_smartisanos`    | Boolean  | 指示是否制作SmartisanOS的sgsi                                           |
 | `make_zui`        | Boolean  | 指示是否制作zui的sgsi                 |
 | `make_super`      | Boolean  | 指示是否制作动态分区的sgsi<sub>（注: 不支持动态分区的`ColorOS`）</sub>        |
-| `upload_transfer`      | Boolean  | 指示是否上传sgsi到wetransfer        |
-| `upload_release`      | Boolean  | 指示是否上传sgsi到github-release         |
 
 ## 开始
 
