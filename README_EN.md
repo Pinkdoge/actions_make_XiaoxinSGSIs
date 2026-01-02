@@ -29,14 +29,14 @@ The configuration file is [sgsi.json](sgsi.json)
 | `make_zui`        | Boolean  | Indicates whether to make zui sgsi                 |
 | `make_super`      | Boolean  | Indicate whether to create a dynamic partitioned sgsi <sub>（Note: The production of `ColorOS` with dynamic partition is not supported）</sub>       |
 | `upload_transfer`      | Boolean  | Indicate whether to upload sgsi to wetransfer        |
-| `upload_artifact`      | Boolean  | Indicate whether to upload sgsi to artifact <sub>（Note: Github seems to have restrictions on free users, uploads can no longer be uploaded after a certain amount of upload, so this scheme is not recommended）</sub>         |
+| `upload_release`      | Boolean  | Indicate whether to upload sgsi to release          |
 
 ## Start
 
-After Fork this repositorie, click on Star in the upper right corner to start
+After Fork this repositories, click on Star in the upper right corner to start
 
 ## Compilation result
-Provide three upload ways, please see the form for details
+When the process of compilation is finished, the output(compressed file) will be uploaded, you can see the form for more details
 
 ## File Structure
 
@@ -44,7 +44,7 @@ Provide three upload ways, please see the form for details
 | ------------------ | ------- | ------------------------------------------------------------ |
 | `system.img`     | IMG  | The main of SGSI                                      |
 | `Patch1.zip`<br>`Patch2.zip`<br>`Patch3.zip`  | ZIP  | Patch template   |
-| `Patchmod.zip`  | ZIP  | Apply patch templates to make patches                                        |
+| `Patch-maker.zip`  | ZIP  | The file in compressed file 'patch-maker` was prepared to make Patch                                 |
 
 ## Troubleshoot
 ### Q1:  Why not support the SGSI production of super partition ColorOS?
