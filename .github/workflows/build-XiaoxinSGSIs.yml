@@ -45,7 +45,7 @@ jobs:
          uses: robinraju/release-downloader@v1
          with:
            repository: "xiaoxindada/SGSI-build-tool"
-           latest: true
+           tags: "v1.9"
            fileName: "SGSI-build-tool.tar"
            
        - name: Initialization environment
@@ -109,10 +109,10 @@ jobs:
            cd SGSI-build-tool/10
            sudo bash make.sh
 
-       - name: Make Patch Module
+       - name: Generate Patch-maker
          run: |
-           zip -r Patchmod.zip SGSI-build-tool/10/out/vendor/app/* SGSI-build-tool/10/out/vendor/bin/* SGSI-build-tool/10/out/vendor/etc/* SGSI-build-tool/10/out/vendor/lib/* SGSI-build-tool/10/out/vendor/lib64/* SGSI-build-tool/10/out/vendor/overlay/*
-           sudo mv Patchmod.zip SGSI-build-tool/10/SGSI/
+           zip -r Patch-maker.zip SGSI-build-tool/10/out/vendor/app/* SGSI-build-tool/10/out/vendor/bin/* SGSI-build-tool/10/out/vendor/etc/* SGSI-build-tool/10/out/vendor/lib/* SGSI-build-tool/10/out/vendor/lib64/* SGSI-build-tool/10/out/vendor/overlay/*
+           sudo mv Patch-maker.zip SGSI-build-tool/10/SGSI/
            
        - name: Zip Patch  
          run: |
