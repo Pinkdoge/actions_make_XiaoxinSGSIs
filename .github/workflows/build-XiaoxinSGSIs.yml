@@ -126,14 +126,6 @@ jobs:
          run: 7za a -t7z -r ${{ steps.var.outputs.pack_sgsi }} SGSI-build-tool/10/SGSI/*
 
        - name: Upload SGSI to WeTransfer
-         if: steps.var.outputs.upload_transfer == 'true'
          run: |
            curl -sL https://git.io/file-transfer | sh
            ./transfer wet ${{ steps.var.outputs.pack_sgsi }}
-          
-       - name: Upload SGSI to Artifact
-         if: steps.var.outputs.upload_artifact == 'true'
-         uses: actions/upload-artifact@v2
-         with: 
-           name: XiaoxinSGSIs
-           path: ${{ steps.var.outputs.pack_sgsi }}
