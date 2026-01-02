@@ -35,14 +35,14 @@
 | `make_zui`        | Boolean  | 指示是否制作zui的sgsi                 |
 | `make_super`      | Boolean  | 指示是否制作动态分区的sgsi<sub>（注: 不支持动态分区的`ColorOS`）</sub>        |
 | `upload_transfer`      | Boolean  | 指示是否上传sgsi到wetransfer        |
-| `upload_artifact`      | Boolean  | 指示是否上传sgsi到artifact<sub>（注: Github貌似对免费用户有限制，上传累计到一定量时就不能再上传了，故不推荐此方案）</sub>         |
+| `upload_release`      | Boolean  | 指示是否上传sgsi到github-release         |
 
 ## 开始
 
 Fork此仓库后，点击右上角Star就会开始
 
 ## 制作结果
-在此提供三个选择，详情请看表格
+Actions把结果上传后，解开压缩包，内部文件结构如下，详情请看表格
 
 ## 文件结构
 
@@ -50,7 +50,7 @@ Fork此仓库后，点击右上角Star就会开始
 | ------------------ | ------- | ------------------------------------------------------------ |
 | `system.img`     | IMG  | SGSI本体                                        |
 | `Patch1.zip`<br>`Patch2.zip`<br>`Patch3.zip`  | ZIP  | Patch模板   |
-| `Patchmod.zip`  | ZIP  | 给用户套Patch模板以制作补丁的压缩包                                        |
+| `Patch-maker.zip`  | ZIP  | `Patch-maker`内文件提取自Rom，用来制作Patch补丁                                        |
 
 ## 疑难解答
 ### 问题1:  为什么不支持动态分区ColorOS的SGSI制作？
