@@ -8,7 +8,5 @@
   "make_h2os": false,
   "make_smartisanos": false,
   "make_zui": false,
-  "make_super": false,
-  "upload_transfer": true,
-  "upload_artifact": false
+  "make_super": false
 }
