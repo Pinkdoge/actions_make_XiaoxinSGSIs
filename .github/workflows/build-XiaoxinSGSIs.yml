@@ -49,7 +49,7 @@ jobs:
            tag: "v1.9"
            fileName: "SGSI-build-tool.tar"
            
-       - name: Initialization environment
+       - name: Initialize environment
          run: |
            sudo tar -xf SGSI-build-tool.tar
            sudo rm -rf SGSI-build-tool/10/setup.sh
