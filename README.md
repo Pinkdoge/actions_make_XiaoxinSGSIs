@@ -48,7 +48,6 @@ Actions把结果上传后，解开压缩包，内部文件结构如下，详情�
 | ------------------ | ------- | ------------------------------------------------------------ |
 | `system.img`     | IMG  | SGSI本体                                        |
 | `Patch1.zip`<br>`Patch2.zip`<br>`Patch3.zip`  | ZIP  | Patch模板   |
-| `Patch-maker.zip`  | ZIP  | `Patch-maker`内文件提取自Rom，用来制作Patch补丁                                        |
 
 ## 疑难解答
 ### 问题1:  为什么不支持动态分区ColorOS的SGSI制作？
