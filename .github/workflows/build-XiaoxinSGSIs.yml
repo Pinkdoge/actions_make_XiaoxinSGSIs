@@ -27,18 +27,19 @@ jobs:
        
        - name: Get variables
          run: |
-           echo "::set-output name=rom_url::$(jq -r '.rom_url' sgsi.json)"
-           echo "::set-output name=rom_name::$(jq -r '.rom_name' sgsi.json)"
-           echo "::set-output name=pack_sgsi::$(jq -r '.pack_sgsi' sgsi.json)"
-           echo "::set-output name=make_miui::$(jq -r '.make_miui' sgsi.json)"
-           echo "::set-output name=make_flyme::$(jq -r '.make_flyme' sgsi.json)"
-           echo "::set-output name=make_coloros::$(jq -r '.make_coloros' sgsi.json)"
-           echo "::set-output name=make_h2os::$(jq -r '.make_h2os' sgsi.json)"
-           echo "::set-output name=make_smartisanos::$(jq -r '.make_smartisanos' sgsi.json)"
-           echo "::set-output name=make_zui::$(jq -r '.make_zui' sgsi.json)"
-           echo "::set-output name=make_super::$(jq -r '.make_super' sgsi.json)"
-           echo "::set-output name=upload_transfer::$(jq -r '.upload_transfer' sgsi.json)"
-           echo "::set-output name=upload_artifact::$(jq -r '.upload_artifact' sgsi.json)"
+           echo "rom_url=$(jq -r '.rom_url' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "rom_name=$(jq -r '.rom_name' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "pack_sgsi=$(jq -r '.pack_sgsi' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "make_miui=$(jq -r '.make_miui' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "make_flyme=$(jq -r '.make_flyme' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "make_coloros=$(jq -r '.make_coloros' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "make_h2os=$(jq -r '.make_h2os' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "make_smartisanos=$(jq -r '.make_smartisanos' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "make_zui=$(jq -r '.make_zui' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "make_super=$(jq -r '.make_super' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "upload_transfer=$(jq -r '.upload_transfer' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "upload_artifact=$(jq -r '.upload_artifact' sgsi.json)" >> $GITHUB_OUTPUT
+           echo "date=$(date +%F)" >> $GITHUB_OUTPUT
          id: var
            
        - name: Download XiaoxinSGSIs Tools
@@ -124,7 +125,12 @@ jobs:
        - name: 7z SGSI
          run: 7za a -t7z -r ${{ steps.var.outputs.pack_sgsi }} SGSI-build-tool/10/SGSI/*
 
-       - name: Upload SGSI to WeTransfer
-         run: |
-           curl -sL https://git.io/file-transfer | sh
-           ./transfer wet ${{ steps.var.outputs.pack_sgsi }}
+       - name: Upload SGSI to Release
+         uses: softprops/action-gh-release@v1
+         with:
+           files: ${{ steps.var.outputs.pack_sgsi }}
+           name: ${{ steps.var.outputs.date }} XiaoxinSGSIs For Q
+           tag_name: ${{ github.run_id }}
+           body: XiaoxinSGSIs-${{ steps.var.outputs.pack_sgsi }} built by github actions
+         env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
