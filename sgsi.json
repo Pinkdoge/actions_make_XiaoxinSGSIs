@@ -1,7 +1,7 @@
 {
-  "rom_url": "https://twds.dl.sourceforge.net/project/xiaomi-eu-multilang-miui-roms/xiaomi.eu/MIUI-STABLE-RELEASES/MIUIv12/xiaomi.eu_multi_HM7_V12.5.3.0.QFLCNXM_v12-10.zip?viasf=1",
-  "rom_name": "xiaomi.eu_multi_HM7_V12.5.3.0.QFLCNXM_v12-10.zip",
-  "pack_sgsi": "HM7_V12.5.3.0.QFLCNXM-eu_XiaoxinSGSIs_Pinkdoge.7z",
+  "rom_url": "https://master.dl.sourceforge.net/project/xiaomi-eu-multilang-miui-roms/xiaomi.eu/MIUI-STABLE-RELEASES/MIUIv12/xiaomi.eu_multi_MIMix3_V12.5.1.0.QEECNXM_v12-10.zip?viasf=1",
+  "rom_name": "xiaomi.eu_multi_MIMix3_V12.5.1.0.QEECNXM_v12-10.zip",
+  "pack_sgsi": "MIMix3_V12.5.1.0.QEECNXM-eu_XiaoxinSGSIs_Pinkdoge.7z",
   "make_miui": true,
   "make_flyme": false,
   "make_coloros": false,
