@@ -42,7 +42,6 @@ When the process of compilation is finished, the output(compressed file) will be
 | ------------------ | ------- | ------------------------------------------------------------ |
 | `system.img`     | IMG  | The main of SGSI                                      |
 | `Patch1.zip`<br>`Patch2.zip`<br>`Patch3.zip`  | ZIP  | Patch template   |
-| `Patch-maker.zip`  | ZIP  | The file in compressed file 'patch-maker` was prepared to make Patch                                 |
 
 ## Troubleshoot
 ### Q1:  Why not support the SGSI production of super partition ColorOS?
