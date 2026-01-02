@@ -28,8 +28,6 @@ The configuration file is [sgsi.json](sgsi.json)
 | `make_smartisanos`    | Boolean  | Indicates whether to make SmartisanOS sgsi                                           |
 | `make_zui`        | Boolean  | Indicates whether to make zui sgsi                 |
 | `make_super`      | Boolean  | Indicate whether to create a dynamic partitioned sgsi <sub>（Note: The production of `ColorOS` with dynamic partition is not supported）</sub>       |
-| `upload_transfer`      | Boolean  | Indicate whether to upload sgsi to wetransfer        |
-| `upload_release`      | Boolean  | Indicate whether to upload sgsi to release          |
 
 ## Start
 
