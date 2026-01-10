@@ -623,7 +623,7 @@ function mandatory_pt (){
  cd ../
  echo "SGSI化处理完成"
  rm -rf ./make/new_fs
- ./makeimg.sh
+ ./makeimg.sh || exit 1
  
 }
 
