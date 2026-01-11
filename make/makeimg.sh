@@ -25,8 +25,8 @@ _________________
 推荐用M为单位大小进行打包需带单位且在自动识别的大小添加至少130M大小
 "
  size="$(du -sm "./out/system" | awk '{print $1}')"
- add=130
- ssize=$(($size+$add))M
+ add=136314880
+ ssize=$(($size+$add))
 
 #mke2fs+e2fsdroid打包
 #$bin/mke2fs -L / -t ext4 -b 4096 ./out/system.img $size
@@ -36,7 +36,7 @@ while true; do
   $bin/mkuserimg_mke2fs.sh "./out/system/" "./out/system.img" ext4 "/system" $ssize -j "0" -T "1230768000" -C "./out/config/system_fs_config" -L "system" "./out/config/system_file_contexts"
   if [ $? -ne 0 ]; then
     add=$(awk -v val=$add 'BEGIN{print int(val * 1.5)'})
-    ssize=$(($size+$add))M
+    ssize=$(($size+$add))
     rm -rf ./out/system.img && sync
   else
     break
