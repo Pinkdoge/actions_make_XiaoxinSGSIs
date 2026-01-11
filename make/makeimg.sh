@@ -24,7 +24,7 @@ _________________
 使用B为单位打包时无需带单位且在自动识别的大小添加一定大小
 推荐用M为单位大小进行打包需带单位且在自动识别的大小添加至少130M大小
 "
- size="$(du -sm "./out/system" | awk '{print $1}')"
+ size="$(du -sb "./out/system" | awk '{print $1}')"
  add=136314880
  ssize=$(($size+$add))
 
