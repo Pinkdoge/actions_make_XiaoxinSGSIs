@@ -24,24 +24,24 @@ _________________
 使用B为单位打包时无需带单位且在自动识别的大小添加一定大小
 推荐用M为单位大小进行打包需带单位且在自动识别的大小添加至少130M大小
 "
- size="$(du -sb "./out/system" | awk '{print $1}')"
- add=136314880
- ssize=$(($size+$add))
+ size="$(du -sh "./out/system" | awk '{print $1}')"
+ #add=136314880
+ ssize=$size
 
 #mke2fs+e2fsdroid打包
 #$bin/mke2fs -L / -t ext4 -b 4096 ./out/system.img $size
 #$bin/e2fsdroid -e -T 0 -S ./out/config/system_file_contexts -C ./out/config/system_fs_config  -a /system -f ./out/system ./out/system.img
-while true; do
-  $bin/mkuserimg_mke2fs.sh "./out/system/" "./out/system.img" ext4 "/system" $ssize -j "0" -T "1230768000" -C "./out/config/system_fs_config" -L "system" "./out/config/system_file_contexts"
-  if [ $? -ne 0 ]; then
-    #add=$(awk -v val=$add 'BEGIN{print int(val * 1.5)'})
-    size=$(awk -v val=$size 'BEGIN{print int(val * 1.5)'})
-    ssize=$size
-    rm -rf ./out/system.img && sync
-  else
-    break
-  fi
-done
+# while true; do
+#   $bin/mkuserimg_mke2fs.sh "./out/system/" "./out/system.img" ext4 "/system" $ssize -j "0" -T "1230768000" -C "./out/config/system_fs_config" -L "system" "./out/config/system_file_contexts"
+#   if [ $? -ne 0 ]; then
+#     #add=$(awk -v val=$add 'BEGIN{print int(val * 1.5)'})
+#     size=$(awk -v val=$size 'BEGIN{print int(val * 1.5)'})
+#     ssize=$size
+#     rm -rf ./out/system.img && sync
+#   else
+#     break
+#   fi
+# done
 
 echo "打包完成"
 echo "输出至SGSI文件夹"
