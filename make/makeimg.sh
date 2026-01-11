@@ -34,7 +34,7 @@ _________________
 while true; do
   $bin/mkuserimg_mke2fs.sh "./out/system/" "./out/system.img" ext4 "/system" $ssize -j "0" -T "1230768000" -C "./out/config/system_fs_config" -L "system" "./out/config/system_file_contexts"
   if [ $? -ne 0 ]; then
-    add=$(( $(echo "scale=0; $add * 1.1" | bc) ))
+    add=$(awk -v val=$add 'BEGIN{print int(val * 1.1)'})
     ssize=$(($size+$add))
   else
     break
