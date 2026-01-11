@@ -13,6 +13,9 @@ jobs:
        - name: Checkout
          uses: actions/checkout@v6
        
+       - name: Clean Up
+       - uses: rokibhasansagar/slimhub_actions@main
+       
       #  - name: Clean Up
       #    run: |
       #      sudo -E apt-get update
