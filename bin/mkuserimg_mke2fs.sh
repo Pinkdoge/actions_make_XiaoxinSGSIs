@@ -48,7 +48,7 @@ shift; shift; shift; shift; shift
 
 if [ "$1" = "-j" ]; then
   if [ "$2" = "0" ]; then
-    MKE2FS_OPTS+="-O ^has_journal,ext_attr,dir_index,filetype -m 0 -i 8192"
+    MKE2FS_OPTS+="-O ^has_journal,ext_attr,dir_index,filetype -m 0 -i 16384"
   else
     MKE2FS_OPTS+="-J size=$2"
   fi
