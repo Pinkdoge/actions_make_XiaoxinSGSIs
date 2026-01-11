@@ -101,9 +101,9 @@ jobs:
             
        - name: Generate SGSI
          run: |
-           rm -rf SGSI-build-tool/10/SGSI.sh SGSI-build-tool/10/makeimg.sh SGSI-build-tool/10/bin/mke2fs SGSI-build-tool/10/bin/e2fsdroid SGSI-build-tool/10/dynamic_SGSI.sh SGSI-build-tool/10/oppo.sh SGSI-build-tool/10/make.sh
+           rm -rf SGSI-build-tool/10/SGSI.sh SGSI-build-tool/10/makeimg.sh SGSI-build-tool/10/bin/mke2fs SGSI-build-tool/10/bin/e2fsdroid SGSI-build-tool/10/bin/mkuserimg_mke2fs.sh SGSI-build-tool/10/dynamic_SGSI.sh SGSI-build-tool/10/oppo.sh SGSI-build-tool/10/make.sh
            mv make/makeimg.sh make/SGSI.sh make/dynamic_SGSI.sh make/oppo.sh make/make.sh SGSI-build-tool/10/
-           mv bin/mke2fs bin/e2fsdroid SGSI-build-tool/10/bin/
+           mv bin/mke2fs bin/e2fsdroid bin/mkuserimg_mke2fs.sh SGSI-build-tool/10/bin/
            cd SGSI-build-tool/10
            sudo bash make.sh
            
