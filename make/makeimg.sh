@@ -31,6 +31,7 @@ _________________
 #mke2fs+e2fsdroid打包
 #$bin/mke2fs -L / -t ext4 -b 4096 ./out/system.img $size
 #$bin/e2fsdroid -e -T 0 -S ./out/config/system_file_contexts -C ./out/config/system_fs_config  -a /system -f ./out/system ./out/system.img
+$bin/mkuserimg_mke2fs.sh "./out/system/" "./out/system.img" ext4 "/system" $ssize -j "0" -T "1230768000" -C "./out/config/system_fs_config" -L "system" "./out/config/system_file_contexts"
 # while true; do
 #   $bin/mkuserimg_mke2fs.sh "./out/system/" "./out/system.img" ext4 "/system" $ssize -j "0" -T "1230768000" -C "./out/config/system_fs_config" -L "system" "./out/config/system_file_contexts"
 #   if [ $? -ne 0 ]; then
