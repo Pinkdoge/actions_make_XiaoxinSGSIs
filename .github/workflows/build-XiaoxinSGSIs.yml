@@ -3,10 +3,6 @@ name: build_XiaoxinSGSIs
 on:
   watch:
     types: [started]
-#  push:
-#    branches: [ master ]
-#  pull_request:
-#    branches: [ master ]
     
 jobs:
   build:
@@ -15,15 +11,16 @@ jobs:
 
     steps:
        - name: Checkout
-         uses: actions/checkout@main
+         uses: actions/checkout@Q
        
-#       - name: Clean Up
-#         run: |
-#           sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
-#           sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
-#           sudo -E apt-get update
-#           sudo -E apt-get -y autoremove --purge
-#           sudo -E apt-get clean 
+       - name: Clean Up
+         run: |
+           sudo -E apt-get update
+           sudo -E apt-get -y autoremove --purge
+           sudo -E apt-get clean
+           sudo pip3 cache purge
+           sudo npm cache clean --force
+           sudo yarn cache clean
        
        - name: Get variables
          run: |
