@@ -35,6 +35,7 @@ while true; do
   $bin/mkuserimg_mke2fs.sh "./out/system/" "./out/system.img" ext4 "/system" $ssize -j "0" -T "1230768000" -C "./out/config/system_fs_config" -L "system" "./out/config/system_file_contexts"
   if [ $? -ne 0 ]; then
     add=$add*1.1
+    ssize=$(($size+$add))
   else
     break
   fi
