@@ -27,14 +27,16 @@ The configuration file is [sgsi.json](sgsi.json)
 | `make_h2os`           | Boolean  | Indicates whether to make H2OS sgsi                  |
 | `make_smartisanos`    | Boolean  | Indicates whether to make SmartisanOS sgsi                                           |
 | `make_zui`        | Boolean  | Indicates whether to make zui sgsi                 |
-| `make_super`      | Boolean  | Indicate whether to create a dynamic partitioned sgsi <sub>（Note: The production of `ColorOS` with dynamic partition is not supported）</sub>       |
+| `make_super`      | Boolean  | Indicate whether to create a dynamic partitioned sgsi <sub>（Note: The `ColorOS` with dynamic partition is not supported）</sub>       |
+
+**Note: The automated production tools is only compatible with v1.9 of SGSI-build-tool and only supports the production of  above-mentioned customized-systems with Android 10-AB partitions.
 
 ## Start
 
 After Fork this repositories, click on Star in the upper right corner to start
 
 ## Compilation result
-When the process of compilation is finished, the output(compressed file) will be uploaded, you can see the form for more details
+When the process of compilation is finished, the output(Compressed file) will be uploaded, you can see the form for more details
 
 ## File Structure
 

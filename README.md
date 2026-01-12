@@ -35,6 +35,8 @@
 | `make_zui`        | Boolean  | 指示是否制作zui的sgsi                 |
 | `make_super`      | Boolean  | 指示是否制作动态分区的sgsi<sub>（注: 不支持动态分区的`ColorOS`）</sub>        |
 
+**注：目前自动化制作工具仅适配到SGSI-build-tool的v1.9版本，仅支持对上述安卓10-AB分区的定制系统进行制作**
+
 ## 开始
 
 Fork此仓库后，点击右上角Star就会开始
