@@ -29,7 +29,7 @@ The configuration file is [sgsi.json](sgsi.json)
 | `make_zui`        | Boolean  | Indicates whether to make zui sgsi                 |
 | `make_super`      | Boolean  | Indicate whether to create a dynamic partitioned sgsi <sub>（Note: The `ColorOS` with dynamic partition is not supported）</sub>       |
 
-**Note: The automated production tools is only compatible with v1.9 of SGSI-build-tool and only supports the production of  above-mentioned customized-systems with Android 10-AB partitions.
+**Note: The automated production tools is only compatible with v1.9 of SGSI-build-tool and only supports the production of  above-mentioned customized-systems with Android 10-AB partitions.**
 
 ## Start
 
